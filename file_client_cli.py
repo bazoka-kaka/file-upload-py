@@ -63,9 +63,24 @@ def remote_get(filename=""):
         print("Gagal")
         return False
 
+def remote_post(filename):
+    try:
+        with open(filename, 'rb') as fp:
+            filedata = base64.b64encode(fp.read()).decode()
+        command_str = f"POST {filename} {filedata}"
+        hasil = send_command(command_str)
+        if hasil['status'] == 'OK':
+            print("File berhasil diupload")
+            return True
+        else:
+            print(f"Gagal: {hasil['data']}")
+            return False
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return False
 
 if __name__=='__main__':
-    server_address=('172.16.16.101',6666)
-    remote_list()
-    remote_get('donalbebek.jpg')
-
+    server_address=('172.18.0.2',6668)
+    # remote_list()
+    # remote_get('pokijan.jpg')
+    remote_post("Group.png")

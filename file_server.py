@@ -9,7 +9,6 @@ import sys
 from file_protocol import  FileProtocol
 fp = FileProtocol()
 
-
 class ProcessTheClient(threading.Thread):
     def __init__(self, connection, address):
         self.connection = connection
@@ -18,7 +17,7 @@ class ProcessTheClient(threading.Thread):
 
     def run(self):
         while True:
-            data = self.connection.recv(32)
+            data = self.connection.recv(4096)
             if data:
                 d = data.decode()
                 hasil = fp.proses_string(d)
@@ -51,7 +50,7 @@ class Server(threading.Thread):
 
 
 def main():
-    svr = Server(ipaddress='0.0.0.0',port=6666)
+    svr = Server(ipaddress='0.0.0.0',port=6668)
     svr.start()
 
 
