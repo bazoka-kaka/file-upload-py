@@ -26,7 +26,7 @@ class FileInterface:
         except Exception as e:
             return dict(status='ERROR',data=str(e))
 
-    def post(self, params):
+    def post(self, params=[]):
         try:
             filename = params[0]
             filedata = base64.b64decode(params[1])
@@ -37,6 +37,16 @@ class FileInterface:
             with open(filename, 'wb') as fp:
                 fp.write(filedata)
             return dict(status='OK', data='File sukses diupload')
+        except Exception as e:
+            return dict(status='ERROR', data=str(e))
+        
+    def delete(self, params):
+        try:
+            filename = params[0]
+            if filename == '':
+                return dict(status='ERROR', data='Filename tidak ditemukan')
+            os.remove(filename)
+            return dict(status='OK', data='File berhasil dihapus')
         except Exception as e:
             return dict(status='ERROR', data=str(e))
 

@@ -79,8 +79,19 @@ def remote_post(filename):
         print(f"Error: {str(e)}")
         return False
 
+def remote_delete(filename):
+    command_str = f"DELETE {filename}"
+    hasil = send_command(command_str)
+    if hasil['status'] == 'OK':
+        print("File berhasil dihapus")
+        return True
+    else:
+        print(f"Gagal: {hasil['data']}")
+        return False
+
 if __name__=='__main__':
-    server_address=('172.18.0.2',6668)
+    server_address=('0.0.0.0',6668)
     # remote_list()
     # remote_get('pokijan.jpg')
-    remote_post("Group.png")
+    # remote_post("README.md")
+    remote_delete('README.md')
